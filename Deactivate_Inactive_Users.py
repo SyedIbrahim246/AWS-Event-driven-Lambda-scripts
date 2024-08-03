@@ -12,9 +12,9 @@ def lambda_handler(event, context):
     users = iam.list_users()['Users']
 
     for user in users:
-        username = user['Username']
+        username = user['UserName']
 
-        access_advisor_data = iam.get_access_advisor_usage(Username=username)
+        access_advisor_data = iam.get_service_last_accessed_details(Username=username)
         last_accessed_timestamp = access_advisor_data['ServicesLastAccessed'][0]['LastAuthenticated']
         last_accessed_date = datetime.utcfromtimestamp(last_accessed_timestamp)
         days_difference = (current_date - last_accessed_date).days
